@@ -1,101 +1,116 @@
-import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-navy p-8">
+      {/* Header */}
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-white mb-4">
+          Influencer Trust Leaderboard
+        </h1>
+        <p className="text-gray-400 mb-8">
+          Real-time rankings of health influencers based on scientific accuracy, credibility, and transparency. Updated daily using AI-powered analysis.
+        </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-navy-light rounded-lg p-6">
+            <div className="flex items-center gap-3">
+              <div className="text-primary">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">1,234</div>
+                <div className="text-gray-400 text-sm">Active Influencers</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-navy-light rounded-lg p-6">
+            <div className="flex items-center gap-3">
+              <div className="text-primary">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">25,431</div>
+                <div className="text-gray-400 text-sm">Claims Verified</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-navy-light rounded-lg p-6">
+            <div className="flex items-center gap-3">
+              <div className="text-primary">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-white">85.7%</div>
+                <div className="text-gray-400 text-sm">Average Trust Score</div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Filter Buttons */}
+        <div className="flex gap-2 mb-6">
+          <button className="bg-primary text-white px-4 py-2 rounded-full text-sm">
+            All
+          </button>
+          <button className="text-gray-400 hover:bg-navy-light px-4 py-2 rounded-full text-sm">
+            Nutrition
+          </button>
+          <button className="text-gray-400 hover:bg-navy-light px-4 py-2 rounded-full text-sm">
+            Fitness
+          </button>
+          <button className="text-gray-400 hover:bg-navy-light px-4 py-2 rounded-full text-sm">
+            Medicine
+          </button>
+          <button className="text-gray-400 hover:bg-navy-light px-4 py-2 rounded-full text-sm">
+            Mental Health
+          </button>
+        </div>
+
+        {/* Table */}
+        <div className="bg-navy-light rounded-lg overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="text-gray-400 text-sm border-b border-gray-700">
+                <th className="text-left p-4">RANK</th>
+                <th className="text-left p-4">INFLUENCER</th>
+                <th className="text-left p-4">CATEGORY</th>
+                <th className="text-left p-4">TRUST SCORE</th>
+                <th className="text-left p-4">TREND</th>
+                <th className="text-left p-4">FOLLOWERS</th>
+                <th className="text-left p-4">VERIFIED CLAIMS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-gray-700 hover:bg-navy/50">
+                <td className="p-4 text-gray-400">#1</td>
+                <td className="p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
+                    <span className="text-white">Dr. Peter Attia</span>
+                  </div>
+                </td>
+                <td className="p-4 text-gray-400">Medicine</td>
+                <td className="p-4">
+                  <span className="text-success">94%</span>
+                </td>
+                <td className="p-4 text-success">↗</td>
+                <td className="p-4 text-gray-400">1.2M+</td>
+                <td className="p-4 text-gray-400">203</td>
+              </tr>
+              {/* Adicione mais linhas seguindo o mesmo padrão */}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 }
