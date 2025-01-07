@@ -1,14 +1,53 @@
+"use client";
+
+import useLocalStorageState from "use-local-storage-state";
+import { DataClaims } from "./search-claims/page";
+import Image from "next/image";
 
 export default function Home() {
+  const [data, setData] = useLocalStorageState<DataClaims[]>("claims", {
+    defaultValue: [],
+  });
+
+  const handleClearAll = () => {
+    setData([]); // Limpa o localStorage
+  };
+  console.log("data", data);
   return (
     <div className="min-h-screen bg-navy p-8">
       {/* Header */}
       <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-4xl font-bold text-white">
+            Influencer Trust Leaderboard
+          </h1>
+          <button
+            onClick={handleClearAll}
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+            Clear All Data
+          </button>
+        </div>
         <h1 className="text-4xl font-bold text-white mb-4">
           Influencer Trust Leaderboard
         </h1>
         <p className="text-gray-400 mb-8">
-          Real-time rankings of health influencers based on scientific accuracy, credibility, and transparency. Updated daily using AI-powered analysis.
+          Real-time rankings of health influencers based on scientific accuracy,
+          credibility, and transparency. Updated daily using AI-powered
+          analysis.
         </p>
 
         {/* Stats Cards */}
@@ -16,8 +55,18 @@ export default function Home() {
           <div className="bg-navy-light rounded-lg p-6">
             <div className="flex items-center gap-3">
               <div className="text-primary">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
                 </svg>
               </div>
               <div>
@@ -30,8 +79,18 @@ export default function Home() {
           <div className="bg-navy-light rounded-lg p-6">
             <div className="flex items-center gap-3">
               <div className="text-primary">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
               <div>
@@ -44,8 +103,18 @@ export default function Home() {
           <div className="bg-navy-light rounded-lg p-6">
             <div className="flex items-center gap-3">
               <div className="text-primary">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                  />
                 </svg>
               </div>
               <div>
@@ -90,23 +159,41 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-gray-700 hover:bg-navy/50">
-                <td className="p-4 text-gray-400">#1</td>
-                <td className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-600 rounded-full"></div>
-                    <span className="text-white">Dr. Peter Attia</span>
-                  </div>
-                </td>
-                <td className="p-4 text-gray-400">Medicine</td>
-                <td className="p-4">
-                  <span className="text-success">94%</span>
-                </td>
-                <td className="p-4 text-success">↗</td>
-                <td className="p-4 text-gray-400">1.2M+</td>
-                <td className="p-4 text-gray-400">203</td>
-              </tr>
-              {/* Adicione mais linhas seguindo o mesmo padrão */}
+              {data.map((influencer, index) => (
+                <tr
+                  key={influencer.name}
+                  className="border-b border-gray-700 hover:bg-navy/50"
+                >
+                  <td className="p-4 text-gray-400">#{index + 1}</td>
+                  <td className="p-4">
+                    <div className="flex items-center gap-3">
+                      {influencer.image && (
+                        <div className="w-10 h-10 bg-gray-600 rounded-full relative">
+                          <Image
+                            src={influencer.image}
+                            alt={influencer.name}
+                            layout="fill" // Faz a imagem preencher o contêiner
+                            objectFit="cover" // Garante que a imagem fique recortada corretamente
+                            className="rounded-full"
+                          />
+                        </div>
+                      )}
+                      <span className="text-white">{influencer.name}</span>
+                    </div>
+                  </td>
+                  <td className="p-4 text-gray-400">{influencer.category}</td>
+                  <td className="p-4">
+                    <span className="text-success">
+                      {influencer.trustedScore}%
+                    </span>
+                  </td>
+                  <td className="p-4 text-success">↗</td>
+                  <td className="p-4 text-gray-400">{influencer.followers}+</td>
+                  <td className="p-4 text-gray-400">
+                    {influencer.claimsVerified}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
