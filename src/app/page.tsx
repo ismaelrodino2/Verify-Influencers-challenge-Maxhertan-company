@@ -51,9 +51,6 @@ export default function Home() {
             {isClearing ? "Clearing..." : "Clear All Data"}
           </button>
         </div>
-        <h1 className="text-4xl font-bold text-white mb-4">
-          Influencer Trust Leaderboard
-        </h1>
         <p className="text-gray-400 mb-8">
           Real-time rankings of health influencers based on scientific accuracy,
           credibility, and transparency. Updated daily using AI-powered

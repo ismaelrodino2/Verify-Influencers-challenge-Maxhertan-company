@@ -109,10 +109,17 @@ export default function SearchClaims() {
 
       const { falseClaims, trueClaims, unknownClaims } = analysis;
 
-      const trustedScore =
-        ((trueClaims - falseClaims) /
-          (trueClaims + falseClaims + unknownClaims)) *
-        100;
+      let trustedScore;
+
+      if (trueClaims === 0 && falseClaims === 0 && unknownClaims > 0) {
+        trustedScore = 50;
+      } else {
+        trustedScore =
+          ((trueClaims - falseClaims) /
+            (trueClaims + falseClaims + unknownClaims)) *
+          100;
+      }
+      
 
       const influencerData = {
         name: result.user.username,
