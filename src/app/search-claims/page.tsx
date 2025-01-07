@@ -58,8 +58,10 @@ export default function SearchClaims() {
       defaultValue: [],
     }
   );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/instagram", {
         method: "POST",
@@ -155,6 +157,8 @@ export default function SearchClaims() {
     } catch (err) {
       console.error("Error processing posts:", err);
       alert("Error processing influencer data");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -395,7 +399,8 @@ export default function SearchClaims() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg flex items-center gap-2"
+            disabled={isSubmitting}
+            className="bg-primary hover:bg-primary/90 disabled:bg-primary/50 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg flex items-center gap-2"
           >
             <svg
               className="w-5 h-5"
@@ -410,7 +415,7 @@ export default function SearchClaims() {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            Start Research
+            {isSubmitting ? 'Processing...' : 'Start Research'}
           </button>
         </div>
       </div>
