@@ -5,37 +5,20 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import useLocalStorageState from "use-local-storage-state";
-import { MediaItem } from "@/utils/types";
+import { ClaimsAnalysisResult, DataClaims, MediaItem } from "@/utils/types";
 
-export interface DataClaims {
-  name: string;
-  image: string;
-  category: string;
-  followers: number;
-  claimsVerified: number;
-  trustedScore: number;
-}
-
-interface ClaimsAnalysisResult {
-  trueClaims: number;
-  falseClaims: number;
-  unknownClaims: number;
-}
-
-// Define o esquema de validação com Zod
 const schema = z.object({
-  influencerName: z.string().min(1, "Nome do influenciador é obrigatório"),
+  influencerName: z.string().min(1, "Influencer name is required"),
   claimsToAnalyze: z
     .number()
-    .min(1, "Deve ser pelo menos 1")
-    .max(100, "Máximo de 100 claims"),
-  timeRange: z.string().min(1, "Selecione um intervalo de tempo"),
-  sessionId: z.string().min(1, "Session ID do Instagram é obrigatório"),
-  includeRevenue: z.boolean(),
-  verifyJournals: z.boolean(),
+    .min(1, "At least 1 claim is required")
+    .max(100, "Maximum of 100 claims").optional(),
+  timeRange: z.string().min(1, "Please select a time range").optional(),
+  sessionId: z.string().min(1, "Instagram session ID is required"),
+  includeRevenue: z.boolean().optional(),
+  verifyJournals: z.boolean().optional(),
 });
 
-// Define o tipo para os dados do formulário
 type FormData = z.infer<typeof schema>;
 
 export default function SearchClaims() {
@@ -79,9 +62,7 @@ export default function SearchClaims() {
         throw new Error("Network response was not ok");
       }
 
-      const result: MediaItem = await response.json()
-
-      console.log("Posts encontrados:", result);
+      const result: MediaItem = await response.json();
 
       const influencerExists = claimsData.some(
         (existingInfluencer) => existingInfluencer.name === result.user.username
@@ -92,7 +73,6 @@ export default function SearchClaims() {
         return;
       }
 
-      // Extrair e agrupar todos os textos dos posts
       const allTexts = result.posts
         .map((post) => {
           const caption =
@@ -103,15 +83,11 @@ export default function SearchClaims() {
           return caption ? `[Post date: ${date}]\n${caption}` : "";
         })
         .filter((text) => text.length > 0)
-        .slice(0, 5) // Limita a 6 itens
+        .slice(0, 5)
         .join("\n\n---\n\n");
 
-      // Criar o prompt para o Gemini
       const prompt = allTexts;
 
-      console.log("qqqq", prompt);
-
-      // Fazer a chamada para a API do Gemini
       const geminiResponse = await fetch("/api/gemini", {
         method: "POST",
         headers: {
@@ -128,12 +104,8 @@ export default function SearchClaims() {
       }
 
       const res = await geminiResponse.json();
-      console.log("resss", res);
-      console.log("resss2", res.analysis);
 
-      // Agora, a string do "analysis" pode ser convertida em um objeto JSON novamente
       const analysis: ClaimsAnalysisResult = res.analysis;
-      console.log("AI Analysis:", analysis);
 
       const { falseClaims, trueClaims, unknownClaims } = analysis;
 
@@ -144,16 +116,15 @@ export default function SearchClaims() {
 
       const influencerData = {
         name: result.user.username,
-        image: (result.user as unknown as { user: { profile_pic_url: string } })?.user?.profile_pic_url,
+        image: (result.user as unknown as { user: { profile_pic_url: string } })
+          ?.user?.profile_pic_url,
         category: "health",
         followers: result.user.followers,
-        claimsVerified: falseClaims + trueClaims + unknownClaims, // A quantidade de claims verificados pode ser o total de claims
+        claimsVerified: falseClaims + trueClaims + unknownClaims,
         trustedScore,
       };
 
-      // Atualizar o estado apenas se o influencer não existir
       setClaimsData((prevData) => [...prevData, influencerData]);
-      // TODO: Mostrar os resultados na interface
     } catch (err) {
       console.error("Error processing posts:", err);
       alert("Error processing influencer data");
@@ -162,15 +133,12 @@ export default function SearchClaims() {
     }
   };
 
-  console.log("data", claimsData);
-
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="min-h-screen bg-navy p-8"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header with Back Button */}
         <div className="flex items-center gap-3 mb-8">
           <Link
             href="/"
@@ -272,7 +240,6 @@ export default function SearchClaims() {
             </div>
           </div>
 
-          {/* Instagram Session ID - Adicionar após o campo de Influencer Name */}
           <div className="mb-6">
             <label className="block text-gray-400 mb-2">
               Instagram Session ID
@@ -415,7 +382,7 @@ export default function SearchClaims() {
                 d="M12 4v16m8-8H4"
               />
             </svg>
-            {isSubmitting ? 'Processing...' : 'Start Research'}
+            {isSubmitting ? "Processing..." : "Start Research"}
           </button>
         </div>
       </div>

@@ -4,7 +4,7 @@ interface PageWrapperProps {
 
 export function PageWrapper({ children }: PageWrapperProps) {
   return (
-    <div className="pt-16"> {/* pt-16 corresponde à altura da navbar (h-16) */}
+    <div className="pt-16">
       {children}
     </div>
   );
